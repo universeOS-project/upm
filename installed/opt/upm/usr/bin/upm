@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+import sys
+import os
+
+CORE_PATH = "."
+sys.path.insert(0, CORE_PATH)
+
+try:
+    from main import upm
+except ImportError:
+    print(f"UPM Core not found at {CORE_PATH}. Cannot continue.")
+    sys.exit(127)
+
+upmd = upm("", 0)
+
+if __name__ == "__main__":
+    opt = sys.argv[1]
+    pkg = sys.argv[2] if len(sys.argv) > 2 else None
+    #if len(sys.argv) < 2:
+    #    print("Usage: upm-front [install|update] (package)")
+    #else:
+    if opt == "cheesecake":
+        upmd.cheesecake()
+    elif opt == "update":
+        upmd.update()
+    elif opt == "install":
+        upmd.install(pkg)
+    elif opt == "search":
+        upmd.search(pkg)
+    else:
+        print("Usage: upm [install|search] (package)\n       upm update")
