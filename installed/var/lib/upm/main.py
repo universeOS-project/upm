@@ -10,6 +10,7 @@ import subprocess
 from pathlib import Path
 import urllib.request
 import socket
+import sys
 
 if platform.system().lower() == "windows":
     CORE_PATH = "C:\\Windows\\System32\\drivers\\var\\lib\\upm"
