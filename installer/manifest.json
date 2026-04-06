@@ -5,7 +5,7 @@
   "installenv_windows": {},
   "installscript_windows": [
     "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\var\\cache",
-    "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\var\\lib\\upm",
+    "mkdir %WINDIR%\\System32\\drivers\\var\\lib\\upm",
     "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin",
     "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\etc\\upm",
     "cd /d %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin",
