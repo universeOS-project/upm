@@ -11,6 +11,12 @@ from pathlib import Path
 import urllib.request
 import socket
 
+if platform.system().lower() == "windows":
+    CORE_PATH = "C:\\Windows\\System32\\drivers\\var\\lib\\upm"
+else:
+    CORE_PATH = "/var/lib/upm"
+sys.path.insert(0, CORE_PATH)
+
 class upm:
     error = {
         1: "UPM_INSFAIL_UNKNOWN",
