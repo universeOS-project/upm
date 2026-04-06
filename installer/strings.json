@@ -1,6 +1,8 @@
 {
-  "UPM_INSFAIL_UNKNOWN": "UPM could not be installed to due an unknown reason.",
-  "UPM_INSFAIL_RWFAIL": "UPM could not be installed because it could not read or write to the needed folders.",
-  "UPM_INSFAIL_INCOMPAT": "UPM could not be installed because it is incompatible with the system ",
-  "UPM_INSFAIL_NOT_AN_ADMIN": "UPM installation was terminated because it is not running as administrator/root."
+  "error": {
+    "UPM_INSFAIL_UNKNOWN": "UPM could not be installed to due an unknown reason.",
+    "UPM_INSFAIL_RWFAIL": "UPM could not be installed because it could not read or write to the needed folders.",
+    "UPM_INSFAIL_INCOMPAT": "UPM could not be installed because it is incompatible with the system ",
+    "UPM_INSFAIL_NOT_AN_ADMIN": "UPM installation was terminated because it is not running as administrator/root."
+  }
 }
