@@ -1,0 +1,9 @@
+{
+    "error": {
+        "UPM_INSFAIL_UNKNOWN": "The package could not be installed due to an unknown reason.",
+        "UPM_INSFAIL_NOTFOUND": "The package could not be installed because it was not found.",
+        "UPM_UPDFAIL_READFAIL": "The package listings could not be updated because repos.json could not be read.",
+        "UPM_INSFAIL_INCOMPAT": "The package could not be installed because it is incompatible with this system.",
+        "UPM_INTFAIL_WRITEFAIL": "UPM could not load for the first time because it could not create the data directory. Try running as admin?"
+    }
+}
