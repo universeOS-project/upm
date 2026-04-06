@@ -3,7 +3,7 @@ import sys
 import os
 import platform
 
-if platform.system().lower() == windows:
+if platform.system().lower() == "windows":
     CORE_PATH = "C:\\Windows\\System32\\drivers\\var\\lib\\upm"
 else:
     CORE_PATH = "/var/lib/upm"
