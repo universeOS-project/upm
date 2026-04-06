@@ -1,0 +1,50 @@
+{
+  "package": "upm",
+  "version": "alpha-0.0.1",
+  "workswith": ["windows", "linux"],
+  "installenv_windows": {},
+  "installscript_windows": [
+    "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\var\\cache",
+    "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\var\\lib\\upm",
+    "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin",
+    "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\etc\\upm",
+    "cd /d %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm-front.py",
+    "echo @echo off > upm.cmd",
+    "echo py %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin\\upm-front.py %%* >> upm.cmd",
+    "cd /d %WINDIR%\\System32\\drivers\\var\\lib\\upm\\",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
+    "powershell -Command \"[Environment]::SetEnvironmentVariable('Path', [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';%WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin', 'Machine')\" > nul"
+  ],
+  "upgradescript_windows": [
+    "cd /d %UNIBIN%",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm-front.py",
+    "cd /d %WINDIR%\\System32\\drivers\\var\\lib\\upm\\",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
+  ],
+  "removescript_windows": [
+    "echo Nope. Can't help ya with that. Ya gotta do it manually."
+  ],
+  "installenv_linux": {},
+  "installscript_linux": [
+    "mkdir -p /opt/upm/var/cache",
+    "mkdir -p /var/lib/upm",
+    "mkdir -p /opt/upm/usr/bin",
+    "mkdir -p /opt/upm/etc/upm",
+    "cd /opt/upm/usr/bin",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm",
+    "chmod +x upm",
+    "ln -sf /opt/upm/usr/bin/upm /usr/local/bin/upm",
+    "cd /var/lib/upm/",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
+  ],
+  "upgradescript_linux": [
+    "cd /opt/upm/usr/bin",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm-front.py",
+    "cd /var/lib/upm/",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
+  ],
+  "removescript_linux": [
+    "Why? WHY DO YOU NEED TO REMOVE A PACKAGE MANAGER-"
+  ]
+} 
