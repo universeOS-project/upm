@@ -12,12 +12,6 @@ import urllib.request
 import socket
 import sys
 
-if platform.system().lower() == "windows":
-    CORE_PATH = "C:\\Windows\\System32\\drivers\\var\\lib\\upm"
-else:
-    CORE_PATH = "/var/lib/upm"
-sys.path.insert(0, CORE_PATH)
-
 class upm:
     error = {
         1: "UPM_INSFAIL_UNKNOWN",
@@ -169,7 +163,7 @@ class upm:
         if self.debug == 1:
             print(repo, pkg)
 
-        with open("strings.json", "r") as strings_js:
+        with open(os.path.join(CORE_PATH, "strings.json"), "r") as strings_js:
             strings = json.load(strings_js)
 
         if pkg == None:
@@ -373,7 +367,7 @@ class upm:
                 cfg = json.load(repolist)
             except:
                 ec = self.error[10]
-                with open("strings.json", "r") as strings_js:
+                with open(os.path.join(CORE_PATH, "strings.json"), "r") as strings_js:
                     strings = json.load(strings_js)
                 err = strings["error"][ec]
                 if self.debug == 1: 
