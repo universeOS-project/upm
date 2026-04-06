@@ -14,6 +14,7 @@
     "echo py %WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin\\upm-front.py %%* >> upm.cmd",
     "cd /d %WINDIR%\\System32\\drivers\\var\\lib\\upm\\",
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json",
     "powershell -Command \"[Environment]::SetEnvironmentVariable('Path', [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';%WINDIR%\\System32\\drivers\\opt\\upm\\usr\\bin', 'Machine')\" > nul"
   ],
   "upgradescript_windows": [
@@ -36,7 +37,8 @@
     "chmod +x upm",
     "ln -sf /opt/upm/usr/bin/upm /usr/local/bin/upm",
     "cd /var/lib/upm/",
-    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json",
   ],
   "upgradescript_linux": [
     "cd /opt/upm/usr/bin",
