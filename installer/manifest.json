@@ -38,7 +38,8 @@
     "ln -sf /opt/upm/usr/bin/upm /usr/local/bin/upm",
     "cd /var/lib/upm/",
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
-    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json"
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json",
+    "export PATH=$PATH:/opt/upm/usr/bin"
   ],
   "upgradescript_linux": [
     "cd /opt/upm/usr/bin",
