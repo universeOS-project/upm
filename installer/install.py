@@ -18,7 +18,8 @@ class upm_mini:
         1: "UPM_INSFAIL_UNKNOWN",
         2: "UPM_INSFAIL_RWFAIL",
         3: "UPM_INSFAIL_INCOMPAT",
-        4: "UPM_INSFAIL_NOT_AN_ADMIN"
+        4: "UPM_INSFAIL_NOT_AN_ADMIN",
+        5: "UPM_INSFAIL_INCORRECTARCH"
     }
     system = platform.system().lower()
     def __init__(self, root, debug):
@@ -204,7 +205,8 @@ error = {
     1: "UPM_INSFAIL_UNKNOWN",
     2: "UPM_INSFAIL_RWFAIL",
     3: "UPM_INSFAIL_INCOMPAT",
-    4: "UPM_INSFAIL_NOT_AN_ADMIN"
+    4: "UPM_INSFAIL_NOT_AN_ADMIN",
+    5: "UPM_INSFAIL_INCORRECTARCH"
 }
 print("--- UPM Installation Tool ---")
 print("\n[*] Welcome to the UPM installer.")
@@ -221,6 +223,37 @@ if debug == "1":
         debugSet = 0
 else:
     debugSet = 0
+
+if platform.machine().lower() == "aarch64":
+    print("[!] UPM does not support ARM at the moment.")
+    print("[!] ARM support will be addressed in the future.")
+    print("[!] That will **not** be today however.")
+    req = urllib.request.Request(f"https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installer/strings.json?v={time.time()}", headers={'User-Agent': 'universeOS-UPM'})
+    package = urllib.request.urlopen(req)
+    strings = json.loads(package.read().decode())
+    rc = 5
+    ec = error[rc]
+    if debugSet == 1:
+        print(strings)
+    err = strings["error"][ec]
+    debugerr = ""
+    print(f"[!] {err} [{ec}{debugerr}]")
+    exit(rc)
+elif platform.machine().lower() == "i386":
+    print("[!] UPM does not support x86.")
+    print("[!] We will not support x86 ever.")
+    print("[!] Also why are you still using x86 it's literally gonna expire in like 2032")
+    req = urllib.request.Request(f"https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installer/strings.json?v={time.time()}", headers={'User-Agent': 'universeOS-UPM'})
+    package = urllib.request.urlopen(req)
+    strings = json.loads(package.read().decode())
+    rc = 5
+    ec = error[rc]
+    if debugSet == 1:
+        print(strings)
+    err = strings["error"][ec]
+    debugerr = ""
+    print(f"[!] {err} [{ec}{debugerr}]")
+    exit(rc)
 
 if platform.system().lower() == "linux":
     if os.getuid() != 0:
