@@ -1,2 +1,2 @@
-# upm
+# UPM
 The universal package manager
