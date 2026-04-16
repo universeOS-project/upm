@@ -1,7 +1,7 @@
 {
   "package": "upm",
-  "version": "alpha-0.0.1",
-  "workswith": ["windows", "linux"],
+  "version": "alpha-0.0.2",
+  "workswith": ["windows", "linux", "linuxarm"],
   "installenv_windows": {},
   "installscript_windows": [
     "mkdir %WINDIR%\\System32\\drivers\\opt\\upm\\var\\cache",
@@ -39,15 +39,39 @@
     "cd /var/lib/upm/",
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json",
-    "export PATH=$PATH:/opt/upm/usr/bin"
+    "echo \"PATH=$PATH:/opt/upm/usr/bin\" > /etc/bash.bashrc"
   ],
   "upgradescript_linux": [
     "cd /opt/upm/usr/bin",
-    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm-front.py",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm",
     "cd /var/lib/upm/",
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
   ],
   "removescript_linux": [
+    "Why? WHY DO YOU NEED TO REMOVE A PACKAGE MANAGER-"
+  ],
+  "installenv_linuxarm": {},
+  "installscript_linuxarm": [
+    "mkdir -p /opt/upm/var/cache",
+    "mkdir -p /var/lib/upm",
+    "mkdir -p /opt/upm/usr/bin",
+    "mkdir -p /opt/upm/etc/upm",
+    "cd /opt/upm/usr/bin",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm",
+    "chmod +x upm",
+    "ln -sf /opt/upm/usr/bin/upm /usr/local/bin/upm",
+    "cd /var/lib/upm/",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/strings.json -o strings.json",
+    "echo \"PATH=$PATH:/opt/upm/usr/bin\" > /etc/bash.bashrc"
+  ],
+  "upgradescript_linuxarm": [
+    "cd /opt/upm/usr/bin",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/opt/upm/usr/bin/upm -o upm",
+    "cd /var/lib/upm/",
+    "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
+  ],
+  "removescript_linuxarm": [
     "Why? WHY DO YOU NEED TO REMOVE A PACKAGE MANAGER-"
   ]
 } 

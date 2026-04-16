@@ -26,7 +26,10 @@ class upm:
         10: "UPM_UPDFAIL_READFAIL",
         250: "UPM_INTFAIL_WRITEFAIL",
     }
-    system = platform.system().lower()
+    if platform.machine().lower() == "aarch64" or platform.machine().lower() == "arm64":
+        system = f"{platform.system().lower()}arm"
+    else:
+        system = platform.system().lower()
     def __init__(self, root, debug):
         self.root = root 
         system = self.system

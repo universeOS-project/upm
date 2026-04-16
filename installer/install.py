@@ -21,7 +21,10 @@ class upm_mini:
         4: "UPM_INSFAIL_NOT_AN_ADMIN",
         5: "UPM_INSFAIL_INCORRECTARCH"
     }
-    system = platform.system().lower()
+    if platform.machine().lower() == "aarch64" or platform.machine().lower() == "arm64":
+        system = f"{platform.system().lower()}arm"
+    else:
+        system = platform.system().lower()
     def __init__(self, root, debug):
         self.root = root
         system = self.system
@@ -32,7 +35,7 @@ class upm_mini:
             We use the default path if none specified by upm-front.py
             If one is specified we set uniroot to it instead of /opt/upm or C:\\Windows\\System32\\drivers\\opt\\upm which are the default
             """
-            if system == "linux":
+            if system == "linux" or system == "linuxarm":
                 uniroot = Path("/opt/upm") # UNIX root
             elif system == "windows":
                 uniroot = Path("C:/Windows/System32/drivers/opt/upm") # Windows root (because System32\drivers\etc is a little lonely)
@@ -224,22 +227,22 @@ if debug == "1":
 else:
     debugSet = 0
 
-if platform.machine().lower() == "aarch64":
-    print("[!] UPM does not support ARM at the moment.")
-    print("[!] ARM support will be addressed in the future.")
-    print("[!] That will **not** be today however.")
-    req = urllib.request.Request(f"https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installer/strings.json?v={time.time()}", headers={'User-Agent': 'universeOS-UPM'})
-    package = urllib.request.urlopen(req)
-    strings = json.loads(package.read().decode())
-    rc = 5
-    ec = error[rc]
-    if debugSet == 1:
-        print(strings)
-    err = strings["error"][ec]
-    debugerr = ""
-    print(f"[!] {err} [{ec}{debugerr}]")
-    exit(rc)
-elif platform.machine().lower() == "i386":
+#if platform.machine().lower() == "aarch64":
+#    print("[!] UPM does not support ARM at the moment.")
+#    print("[!] ARM support will be addressed in the future.")
+#    print("[!] That will **not** be today however.")
+#    req = urllib.request.Request(f"https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installer/strings.json?v={time.time()}", headers={'User-Agent': 'universeOS-UPM'})
+#   package = urllib.request.urlopen(req)
+#    strings = json.loads(package.read().decode())
+#    rc = 5
+#    ec = error[rc]
+#    if debugSet == 1:
+#        print(strings)
+#    err = strings["error"][ec]
+#    debugerr = ""
+#    print(f"[!] {err} [{ec}{debugerr}]")
+#    exit(rc)el
+if platform.machine().lower() == "i386":
     print("[!] UPM does not support x86.")
     print("[!] We will not support x86 ever.")
     print("[!] Also why are you still using x86 it's literally gonna expire in like 2032")
