@@ -40,7 +40,7 @@ class upm:
             We use the default path if none specified by upm-front.py
             If one is specified we set uniroot to it instead of /opt/upm or C:\\Windows\\System32\\drivers\\opt\\upm which are the default
             """
-            if system == "linux":
+            if system == "linux" or system == "linuxarm":
                 uniroot = Path("/opt/upm") # UNIX root
             elif system == "windows":
                 uniroot = Path("C:/Windows/System32/drivers/opt/upm") # Windows root (because System32\drivers\etc is a little lonely)
