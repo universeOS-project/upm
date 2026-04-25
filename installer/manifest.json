@@ -1,6 +1,6 @@
 {
   "package": "upm",
-  "version": "alpha-0.0.2",
+  "version": "alpha-0.0.3",
   "workswith": ["windows", "linux", "linuxarm"],
   "installenv_windows": {},
   "installscript_windows": [
@@ -72,6 +72,6 @@
     "curl -q https://raw.githubusercontent.com/universeOS-project/upm/refs/heads/main/installed/var/lib/upm/main.py -o main.py"
   ],
   "removescript_linuxarm": [
-    "Why? WHY DO YOU NEED TO REMOVE A PACKAGE MANAGER-"
+    "No."
   ]
 } 

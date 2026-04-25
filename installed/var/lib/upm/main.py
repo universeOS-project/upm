@@ -14,8 +14,10 @@ import sys
 
 if platform.system().lower() == "windows":
     CORE_PATH = "C:\\Windows\\System32\\drivers\\var\\lib\\upm"
-else:
+elif platform.system().lower() != "darwin" or platform.system().lower() != "darwinarm":
     CORE_PATH = "/var/lib/upm"
+else:
+    CORE_PATH = "/Users/Shared/.lemon/upm"
 sys.path.insert(0, CORE_PATH)
 
 class upm:
@@ -30,6 +32,10 @@ class upm:
         system = f"{platform.system().lower()}arm"
     else:
         system = platform.system().lower()
+
+    with open(os.path.join(CORE_PATH, "strings.json"), "r") as strings_js:
+        strings = json.load(strings_js)
+
     def __init__(self, root, debug):
         self.root = root 
         system = self.system
@@ -172,9 +178,6 @@ class upm:
         if self.debug == 1:
             print(repo, pkg)
 
-        with open(os.path.join(CORE_PATH, "strings.json"), "r") as strings_js:
-            strings = json.load(strings_js)
-
         if pkg == None:
             ec = error[repo]
             err = strings["error"][ec]
@@ -245,10 +248,20 @@ class upm:
         This reads the manifest of a package and executes it.
         """
         error = self.error
+        strings = self.strings
         import tempfile
 
         if self.debug == 1:
             print(manifest)
+
+        if f"depends_{self.system}" in manifest:
+            print(f"{package_name} requires: {', '.join(manifest[f'depends_{self.system}'])}")
+            for dep in manifest[f'depends_{self.system}']:
+                print(f"Installing dependency {dep}")
+                self.install(dep)
+        else:
+            print("WARNING: This package does not contain a depends block for your system.")
+            print("         Please report this to the maintainer of this package.")
 
         if self.system == "windows":
             suffix = ".bat"
@@ -256,11 +269,17 @@ class upm:
             setvar = "set"
             runwith = "cmd"
             args = "/c"
-        else:
+        elif self.system == "linux" or self.system == "linuxarm":
             suffix = ""
             header = "#!/bin/bash\n"
             setvar = "export"
             runwith = "bash"
+            args = ""
+        elif self.system == "darwin" or self.system == "darwinarm":
+            suffix = ""
+            header = "#!/bin/zsh\n"
+            setvar = "export"
+            runwith = "zsh"
             args = ""
 
         # "I'M GONNA MAKE MY ENGINEERS MAKE A COMBUSTABLE LEMON THAT BURNS YOUR HOUSE DOWN"
