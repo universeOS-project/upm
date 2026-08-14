@@ -1,6 +1,6 @@
 {
   "package": "upm",
-  "version": "alpha-0.0.3",
+  "version": "alpha-0.0.4",
   "workswith": ["windows", "linux", "linuxarm"],
   "installenv_windows": {},
   "installscript_windows": [

@@ -31,5 +31,7 @@ if __name__ == "__main__":
         upmd.install(pkg)
     elif opt == "search":
         upmd.search(pkg)
+    elif opt == "remove":
+        upmd.remove(pkg)
     else:
         print("Usage: upm [install|search] (package)\n       upm update")

@@ -17,7 +17,7 @@ if platform.system().lower() == "windows":
 elif platform.system().lower() != "darwin" or platform.system().lower() != "darwinarm":
     CORE_PATH = "/var/lib/upm"
 else:
-    CORE_PATH = "/Users/Shared/.lemon/upm"
+    CORE_PATH = "/Users/Shared/.lemon/upm/var/lib/upm"
 sys.path.insert(0, CORE_PATH)
 
 class upm:
@@ -174,7 +174,25 @@ class upm:
         unicache = self.unicache
         unibin = self.unibin
 
+        # if package.endswith(".upa"):
+        #     import zipfile
+        #     if self.debug == 1:
+        #         print(f"[*] Local package detected as {package}")
+        #     repo = lolol # We need stupid garbage to fill this in so code no problem engine a kaput
+        #     try:
+        #         with open(package, "r") as f: # I am so sorry but this is all I can think of
+        #             pkg = package
+        #     except:
+        #         pkg = 2
+        #         pkg = None
+        #
+        #     local = True # Practically this entire codebase is literally just a cloud client so we need this to tell the new changes to not run the cloud code
+        # else:
+        #     if self.debug == 1:
+        #         print(f"[*] NOTE: {package} is not on the server. Running search...")
         repo, pkg = self.search(package)
+        # local = False
+
         if self.debug == 1:
             print(repo, pkg)
 
@@ -189,14 +207,11 @@ class upm:
                 debugerr = ""
             print(f"{err} [{ec}{debugerr}]")
             return
-
+        #if not local:
         with open(f"{uniroot}/etc/upm/repos.json", "r") as reposa:
             repolist = json.load(reposa)
             if self.debug == 1:
                 print(f"{reposa}\n\n{repolist}")
-
-        if self.debug == 1:
-            print(repolist)
 
         for y, z in repolist["repos"].items():
             if y == repo:
@@ -229,7 +244,6 @@ class upm:
 
         if self.debug == 1:
             print(f"Raw JSON: {manifestj}\n\nPython: {manifest}")
-
         if self.system in manifest["workswith"]:
             rc = 0
         else:
@@ -240,6 +254,7 @@ class upm:
         if rc != 0:
             print(f"{err} [{ec}]")
             return
+        #else:
 
         self.execute(manifest, base_url, "install", package)
 
@@ -323,7 +338,10 @@ class upm:
 
         os.remove(spath)
 
-        self.updatedb("add", package_name, manifest['version'])
+        if script != "remove":
+            self.updatedb("add", package_name, manifest['version'])
+        else:
+            self.updatedb("rm", package_name, manifest['version'])
 
     def updatedb(self, opt, package, pkgver):
         uniroot = self.uniroot
@@ -355,6 +373,65 @@ class upm:
 
         return rc
 
+    def remove(self, package):
+        package = self.updatedb("fi", package, 0)
+        if package == 21:
+            print("[!] Package not found or not installed")
+            exit(21)
+
+        repo, pkg = self.search(package)
+
+        if self.debug == 1:
+            print(repo, pkg)
+
+        if pkg == None:
+            ec = error[repo]
+            err = strings["error"][ec]
+            print(f"Could not remove the package {package}:")
+            if self.debug == 1:
+                debugerr = ", " + repo
+            else:
+                debugerr = ""
+            print(f"{err} [{ec}{debugerr}]")
+            exit(2)
+        with open(f"{uniroot}/etc/upm/repos.json", "r") as reposa:
+            repolist = json.load(reposa)
+            if self.debug == 1:
+                print(f"{reposa}\n\n{repolist}")
+
+        for y, z in repolist["repos"].items():
+            if y == repo:
+                base_url = z
+                if self.debug == 1:
+                    print(base_url)
+
+        with open(f"{unicache}/{repo}/packages.json", "r") as pkglistj:
+            pkglist = json.load(pkglistj)
+            if self.debug == 1:
+                print(f"{pkglistj}\n\n{pkglist}")
+
+        full_url = f"{base_url}{pkg}"
+        if self.debug == 1:
+            print(base_url, pkg, full_url)
+
+        manifestj = self.get(full_url, "", "uncached")
+        manifest = json.loads(manifestj.read().decode('utf-8'))
+
+        if self.debug == 1:
+            print(f"Raw JSON: {manifestj}\n\nPython: {manifest}")
+        if self.system in manifest["workswith"]:
+            rc = 0
+        else:
+            rc = 3
+            ec = error[rc]
+            err = strings["error"][ec]
+
+        if rc != 0:
+            print(f"{err} [{ec}]")
+            return
+
+        self.execute(manifest, base_url, "remove", package)
+        self.updatedb
 
     def search(self, package):
         packagerepos = []
