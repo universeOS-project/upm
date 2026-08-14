@@ -385,8 +385,8 @@ class upm:
             print(repo, pkg)
 
         if pkg == None:
-            ec = error[repo]
-            err = strings["error"][ec]
+            ec = self.error[repo]
+            err = self.strings["error"][ec]
             print(f"Could not remove the package {package}:")
             if self.debug == 1:
                 debugerr = ", " + repo
