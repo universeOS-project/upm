@@ -374,6 +374,11 @@ class upm:
         return rc
 
     def remove(self, package):
+        error = self.error
+        uniroot = self.uniroot
+        unicache = self.unicache
+        unibin = self.unibin
+
         package = self.updatedb("fi", package, 0)
         if package == 21:
             print("[!] Package not found or not installed")
