@@ -436,7 +436,7 @@ class upm:
             return
 
         self.execute(manifest, base_url, "remove", package)
-        self.updatedb
+        self.updatedb("rm", package, 0)
 
     def search(self, package):
         packagerepos = []
