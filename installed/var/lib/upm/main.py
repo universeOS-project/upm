@@ -379,8 +379,8 @@ class upm:
         unicache = self.unicache
         unibin = self.unibin
 
-        package = self.updatedb("fi", package, 0)
-        if package == 21:
+        check = self.updatedb("fi", package, 0)
+        if check == 21:
             print("[!] Package not found or not installed")
             exit(21)
 
